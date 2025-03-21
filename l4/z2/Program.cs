@@ -34,7 +34,7 @@ public static class ArrayUtils
     public static Person[] GenerateRandomPersons(int count)
     {
         Random rand = new Random();
-        var names = new[] { "Alice", "Bob", "Charlie", "David", "Eva" };
+        var names = new[] { "Адриан", "Иван", "Евгений", "Артем", "Кирилл" };
         Person[] persons = new Person[count];
 
         for (int i = 0; i < count; i++)
@@ -57,21 +57,21 @@ class Program
         Console.WriteLine("Сгенерированные данные:");
         foreach (var person in persons)
         {
-            Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
+            Console.WriteLine($"Имя: {person.Name}, Возраст: {person.Age}");
         }
 
         ArrayUtils.SortByName(persons);
         Console.WriteLine("\nОтсортированные данные по имени:");
         foreach (var person in persons)
         {
-            Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
+            Console.WriteLine($"Имя: {person.Name}, Возраст: {person.Age}");
         }
 
         var filteredPersons = ArrayUtils.FilterByAge(persons, 25);
         Console.WriteLine("\nФильтрация по возрасту (мин. 25 лет):");
         foreach (var person in filteredPersons)
         {
-            Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
+            Console.WriteLine($"Имя: {person.Name}, Возраст: {person.Age}");
         }
 
         double averageAge = ArrayUtils.CalculateAverageAge(persons);

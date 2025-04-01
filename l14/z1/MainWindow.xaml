@@ -13,7 +13,11 @@
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Click="Exit_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Клиенты"></MenuItem>
+            <MenuItem Header="Клиенты">
+                <MenuItem Header="Добавить клиента" Click="AddClientCommand"></MenuItem>
+                <MenuItem Header="Редактировать клиента" Click="EditClientCommand"></MenuItem>
+                <MenuItem Header="Удалить клиента" Click="DeleteClientCommand"></MenuItem>
+            </MenuItem>
             <MenuItem Header="Настройки"></MenuItem>
         </Menu>
 

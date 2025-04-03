@@ -1,0 +1,32 @@
+﻿<Window x:Class="CRMApp.ClientForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавить/Редактировать клиента" Height="393" Width="400">
+    
+    <Window.Resources>
+        <ControlTemplate x:Key="SaveButtonTemplate">
+            <Button Content="Сохранить" Background="Black" Foreground="White" FontWeight="Heavy" 
+                Padding="10" Margin="10"/>
+        </ControlTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="ФИО" Margin="10"/>
+            <TextBox Name="FullNameTextBox" Margin="10"/>
+            <TextBlock Text="Контакт" Margin="10"/>
+            <TextBox Name="ContactTextBox" Margin="10"/>
+            <TextBlock Text="История взаимодействий" Margin="10"/>
+            <TextBox Name="InteractionHistoryTextBox" Margin="10"/>
+            <TextBlock Text="Тип клиента" Margin="10"/>
+            <ComboBox Name="ClientTypeComboBox" Margin="10" 
+                     SelectedItem="{Binding ClientType, Mode=TwoWay}" 
+                     IsEditable="False" 
+                     IsTextSearchEnabled="False">
+                <ComboBoxItem Content="VIP" />
+                <ComboBoxItem Content="Обычный клиент" />
+            </ComboBox>
+            <Button Template="{StaticResource SaveButtonTemplate}" Click="SaveButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -9,7 +9,7 @@ class Program
 
         double a = angleInDegrees * (Math.PI / 180);
 
-        double z1 = (1 - 2 * Math.Pow(Math.Sin(a), 2)) / (1 + Math.Pow(Math.Sin(2 * a), 2));
+        double z1 = (1 - 2 * Math.Pow(Math.Sin(a), 2)) / (1 + (Math.Sin(2 * a)));
 
         double tga = Math.Tan(a);
         double z2 = (1 - tga) / (1 + tga);

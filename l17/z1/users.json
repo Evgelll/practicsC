@@ -1,0 +1,14 @@
+{
+    "Users": [
+        {
+            "Username": "admin",
+            "Password": "hashed_password_here",
+            "Role": "Administrator"
+        },
+        {
+            "Username": "manager",
+            "Password": "hashed_password_here",
+            "Role": "Manager"
+        }
+    ]
+}

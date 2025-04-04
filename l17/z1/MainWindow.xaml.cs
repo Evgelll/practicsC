@@ -13,6 +13,8 @@ public partial class MainWindow : Window
 
     public CRMViewModel ViewModel { get; set; }
 
+    private UserService _userService;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -20,6 +22,12 @@ public partial class MainWindow : Window
         ClientsListView.DataContext = this;
         ViewModel = new CRMViewModel();
         DataContext = ViewModel;
+        _userService = new UserService();
+
+
+        var loginForm = new LoginForm(_userService);
+        loginForm.ShowDialog();
+
 
         LoadClients();
     }
@@ -96,7 +104,7 @@ public partial class MainWindow : Window
 
     private void SaveClients()
     {
-        using (StreamWriter writer = new StreamWriter("clients.txt"))
+        using (StreamWriter writer = new StreamWriter("crm_data.json"))
         {
             foreach (var client in Clients)
             {
@@ -110,9 +118,9 @@ public partial class MainWindow : Window
     {
         ViewModel.LoadClientsAsync();
 
-        if (File.Exists("clients.txt"))
+        if (File.Exists("crm_data.json"))
         {
-            using (StreamReader reader = new StreamReader("clients.txt"))
+            using (StreamReader reader = new StreamReader("crm_data.json"))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)

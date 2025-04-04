@@ -38,13 +38,8 @@ public class CRMViewModel : INotifyPropertyChanged
 
     public async void LoadClientsAsync()
     {
-        IsLoading = true; 
-        var clients = await _clientService.LoadClientsAsync();
-        Clients.Clear();
-        foreach (var client in clients)
-        {
-            Clients.Add(client);
-        }
+        IsLoading = true;
+        await _clientService.LoadClientsAsync();  // Используем асинхронный метод
         IsLoading = false;
     }
 

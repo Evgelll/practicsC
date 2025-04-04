@@ -12,13 +12,9 @@ public class ClientService
         LoadClients();
     }
 
-    public async Task LoadClientsAsync()
+    public async Task<List<ClientModel>> LoadClientsAsync()
     {
-        var clients = await Task.Run(() => LoadClients());
-        foreach (var client in clients)
-        {
-            Clients.Add(client);
-        }
+        return await Task.Run(() => LoadClients());
     }
 
     public void AddClient(ClientModel client)
@@ -73,7 +69,6 @@ public class ClientService
                 }
             }
         }
-
         return clientList;
     }
 }

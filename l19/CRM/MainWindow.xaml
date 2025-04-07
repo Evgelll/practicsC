@@ -1,0 +1,179 @@
+﻿<Window x:Class="CRM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CRM"
+        mc:Ignorable="d"
+        Title="CRM для небольшого бизнеса" Height="450" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Меню сверху -->
+        <Menu Grid.Row="0">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Клиент">
+                <MenuItem Header="Добавить" Command="{Binding AddClientCommand}"/>
+                <MenuItem Header="Редактировать" Command="{Binding EditClientCommand}"/>
+                <MenuItem Header="Удалить" Command="{Binding DeleteClientCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Основной контент -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Список клиентов с кнопками -->
+            <StackPanel Grid.Column="0" Margin="10">
+                <ListView x:Name="ClientsListView" ItemsSource="{Binding Clients}" 
+                          SelectedItem="{Binding SelectedClient, UpdateSourceTrigger=PropertyChanged}" Height="300">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border x:Name="ClientCard" BorderBrush="Gray" BorderThickness="1" Margin="5" 
+                                    Background="White" Width="200" Height="50" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <!-- Плавное изменение цвета при наведении -->
+                                        <Style.Triggers>
+                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                        To="LightBlue" Duration="0:0:0.3"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                        To="White" Duration="0:0:0.3"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel Margin="5">
+                                    <TextBlock Text="{Binding FullName}" FontWeight="Bold"/>
+                                    <TextBlock x:Name="PhoneNumberTextBlock" Text="{Binding PhoneNumber}"/>
+                                    <TextBlock x:Name="EmailTextBlock" Text="{Binding Email}" Visibility="Collapsed"/>
+                                    <TextBlock x:Name="ClientTypeTextBlock" Text="{Binding ClientType}" Visibility="Collapsed"/>
+                                </StackPanel>
+                                <!-- Разворачивание карточки на одиночный клик -->
+                                <Border.Triggers>
+                                    <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Height" 
+                                                                 From="50" To="100" Duration="0:0:0.5"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EmailTextBlock" 
+                                                                               Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ClientTypeTextBlock" 
+                                                                               Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Border.Triggers>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!-- Кнопки управления -->
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button Content="Добавить" Command="{Binding AddClientCommand}" Width="80" Margin="0,0,5,0"/>
+                    <Button Content="Редактировать" Command="{Binding EditClientCommand}" Width="85" Margin="0,0,5,0"/>
+                    <Button Content="Удалить" Command="{Binding DeleteClientCommand}" Width="59" RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleY="-0.03"/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-0.016"/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Вкладки с информацией о клиенте -->
+            <TabControl x:Name="ClientTabs" Grid.Column="1" Margin="10" >
+                <TabItem Header="Информация о клиенте" IsSelected="True">
+                    <Border x:Name="ClientDetails" Background="LightGray" Padding="10">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <!-- Анимация выезда вкладки -->
+                                <Setter Property="Margin" Value="200,0,0,0"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TabItem}, Path=IsSelected}" Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ThicknessAnimation Storyboard.TargetProperty="Margin" 
+                                                                        From="200,0,0,0" To="0,0,0,0" 
+                                                                        Duration="0:0:0.5"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ThicknessAnimation Storyboard.TargetProperty="Margin" 
+                                                                        From="0,0,0,0" To="200,0,0,0" 
+                                                                        Duration="0:0:0.5"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <StackPanel>
+                            <TextBlock Text="Подробности о клиенте" FontSize="16" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="ФИО:" Width="80"/>
+                                <TextBlock Text="{Binding SelectedClient.FullName}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Телефон:" Width="80"/>
+                                <TextBlock Text="{Binding SelectedClient.PhoneNumber}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Email:" Width="80"/>
+                                <TextBlock Text="{Binding SelectedClient.Email}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Тип клиента:" Width="80"/>
+                                <TextBlock Text="{Binding SelectedClient.ClientType}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <!-- Индикатор загрузки -->
+        <ProgressBar IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                     Width="200" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>

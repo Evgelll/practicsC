@@ -1,0 +1,35 @@
+{
+    "Clients": [
+        {
+            "FullName": "���� ������",
+            "PhoneNumber": "+375441234567",
+            "Email": "ivan@example.com",
+            "ClientType": "���������� ����",
+            "InteractionHistory": []
+        },
+        {
+            "FullName": "����� �������",
+            "PhoneNumber": "+375447654321",
+            "Email": "maria@example.com",
+            "ClientType": "VIP",
+            "InteractionHistory": []
+        }
+    ],
+    "Orders": [
+        {
+            "OrderId": 1,
+            "Description": "Заказ 1",
+            "Amount": 1000
+        },
+        {
+            "OrderId": 2,
+            "Description": "Заказ 2",
+            "Amount": 2000
+        },
+        {
+            "OrderId": 3,
+            "Description": "Заказ 3",
+            "Amount": 3000
+        }
+    ]
+}

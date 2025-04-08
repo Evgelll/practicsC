@@ -1,0 +1,31 @@
+﻿@model List<TodoListApp.Models.TodoItem>
+
+<h2>Список дел</h2>
+
+<div>
+    <a href="@Url.Action("Index", "Todo", new { filter = "all" })">Все</a> |
+    <a href="@Url.Action("Index", "Todo", new { filter = "active" })">Активные</a> |
+    <a href="@Url.Action("Index", "Todo", new { filter = "completed" })">Завершённые</a>
+</div>
+
+<ul>
+    @foreach (var todo in Model)
+    {
+        <li>
+            @if (todo.IsCompleted)
+            {
+                <s>@todo.Title</s>
+            }
+            else
+            {
+                @todo.Title
+                <a href="@Url.Action("Complete", "Todo", new { id = todo.Id })">Завершить</a>
+            }
+        </li>
+    }
+</ul>
+
+<form asp-action="Create" method="post">
+    <input type="text" name="title" placeholder="Новая задача" />
+    <button type="submit">Добавить</button>
+</form>

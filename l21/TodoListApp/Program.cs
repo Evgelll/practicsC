@@ -8,6 +8,8 @@ namespace TodoListApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ITaskService, TaskService>();
+            builder.Services.AddSingleton<ITaskRepository, FileTaskRepository>();
 
             var app = builder.Build();
 

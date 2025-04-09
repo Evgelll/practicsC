@@ -13,11 +13,7 @@ public class TodoController : Controller
     public IActionResult Index(string filter = "all")
     {
         var tasks = _taskService.GetTasks();
-        // Фильтрация задач
         ViewBag.Filter = filter;
-        return View(tasks);
-
-        ViewBag.Filter = filter; // Передаем фильтр в представление
         return View(tasks);
     }
 

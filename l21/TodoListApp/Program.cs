@@ -31,7 +31,7 @@ namespace TodoListApp
 
             app.UseEndpoints(endpoints =>
             {
-                // Новый маршрут для списка дел
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Todo}/{action=Index}/{id?}");

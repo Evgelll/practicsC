@@ -1,0 +1,8 @@
+bin/
+obj/
+*.csproj.user
+.vscode/
+.vs/
+*.log
+Dockerfile*
+*.md
